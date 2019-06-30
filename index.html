@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="style.css">
+    <title>Hello, world!</title>
+
+  </head>
+  <body>
+	<!-- <input class="test test2" onclick="writeString()" type="text"> -->
+	<!-- main>section#first>.container>.row+.row -->
+
+	<header>
+		<!-- <nav>Nawigacja</nav> -->
+	</header>
+	<main>
+<!-- 		<section id="first">
+
+			<div class="container">
+				<div class="row">
+
+					<div class="col red">asd</div>
+					<div class="col yellow">asdasd</div>
+					<div class="col red">asdasd</div>
+				
+				</div>
+				<div class="row">
+
+					<div class="col-12 col-sm-3 col-md-4 red">
+						<div class="block_left">
+							
+						</div>
+					</div>
+					<div class="col-12 col-sm-9 col-md-8 yellow">asdasd</div>
+
+				</div>
+			</div>
+
+		</section> -->
+		<section id="section_two">
+			<div class="container">
+				<!-- <h1>{{name}}</h1>				 -->
+				<div class="show">
+					<h1 v-if="bool">{{name}}</h1>
+					<button
+						:category="buttonCategory"
+						type="button"
+						class="btn btn-primary" 
+						@click="bool = false"> Usuń</button>
+					<button 
+						v-bind:category="buttonCategoryTwo"
+						type="button"
+						class="btn btn-primary"
+						v-on:click="bool = true"> Pokaż</button>
+				</div>
+
+				<div class="quest-two">
+					<button
+						:class="buttonOne" 
+						@click="another++">Dodaj o 1</button>
+					<button
+						@click="another--">odejmij o 1</button>
+					{{another}}
+
+					<h3>Stwórz content html</h3>
+					<textarea v-model="html_textarea" cols="30" rows="10"></textarea>
+					<div class="raw-html" v-html="html_textarea">
+					</div>
+
+				</div>
+
+				<div class="quest-three-todos">
+					<h1>Zadania do wykonania</h1>
+					<div class="row">
+						<ul>
+				<!-- 			<li v-for="todo in todos">
+								{{todo.text}}
+							</li> -->
+							<!-- druga rozszerzona wersja petli v-for -->
+
+							<br><br>
+							<div>
+								<li v-for="(todo, index) in todos" :key="todo.id">
+									<span :class="{'done': todo.done}">{{index}}. {{todo.text}} - {{todo.done}}</span>
+									{{ index === 0 ? 'Pierwszy element' : '' }}
+									<button @click="deleteTodo(index, todo)">Usuń</button>
+									<button @click="todo.done = !todo.done">Wykonane</button>
+									
+								</li>
+							</div>
+
+						</ul>
+					</div>
+					<div class="row">
+						<input v-model="todoText" type="text">
+						{{todoText}}
+						<button :class="inputClasses" @click="addTodo">Dodaj todo</button>
+						<button :class="{'color_black': buttonBlack}"></button>
+
+						<!-- <div v-bind:[bindedAttr]="methodForBind" ></div> -->
+						<div class="btn" category="vat" ></div>
+					</div>
+
+				</div>
+
+				<div class="quest-four">
+					
+					<div class="searched-todos">
+						<h3>Wyszukiwane pozycje</h3>
+						<input placeholder="Wyszukaj" type="text" v-model="searchTodo">
+						<ul class="searched-todos-ul">
+							<li class="li-todo-item" v-for="(todo, index) in searchedTodos">
+								{{todo.text}}
+							</li>
+						</ul>
+					</div>
+
+				</div>
+
+				<div class="quest-five">
+					<div class="searching-axios">
+						<input type="text" v-model="searchAxios">
+						<img :src="answerAxios.img" alt="">
+						{{answerAxios.text}}
+					</div>
+				</div>
+
+				<div class="custom-components">
+<!-- 					<input-component :label_input="label_input_one">
+					</input-component>
+					<input-component :label_input="label_input_two">
+					</input-component>
+					<input-component :label_input="label_input_three">
+					</input-component> -->
+					
+					<!-- konstrukcja customowego komponentu bez slotów -->
+<!-- 					<input-component 
+						v-for="(single) in label_inputs"
+						:label_input="single.text" 
+						:key="single.id">
+						</input-component> -->
+					<!-- konstrukcja komponentu z elementami w środku przekazywanymi do slotu -->
+	<!-- 				<input-component 
+						v-for="single in label_inputs"
+						:label_input="single.text" 
+						:key="single.id">
+						<div>sadasd</div>					
+					</input-component>-->
+
+<!-- komponent z slotami o własnych nazwach i rozmieszczeniu -->
+					<input-component 
+						v-for="single in label_inputs"
+						:label_input="single.text" 
+						:key="single.id">
+						<!-- zawartośc która ląduje do slota z name="header" -->
+						<template v-slot:header>
+							<h2>Nagłowek w headerze</h2>
+						</template>
+						
+						<!-- zawartośc która ląduje do zwykłego slota -->
+						<div>sadasd</div>
+
+						<!-- zawartośc która ląduje do slota z name="footer" -->
+						<template v-slot:footer>
+							<h2>stopka tego komponentu</h2>
+						</template>			
+					</input-component>
+
+					<button @click="currentTab = 'Home'">Home</button>
+					<button @click="currentTab = 'Posts'">Posts</button>
+					<button @click="currentTab = 'Archive'">Archive</button>
+					<!-- po kliknięciu w button Archive, zmienna currentTab zmienia wartośc na Arhive w wyniku czego funkcja computed currentTabComponents wypluwa poprzez return ciąg znaków tab-archive, przez co tag "component" wyświetla w środku komponent vue o takiej samej nazwie -->
+					<component :is="currentTabComponent"></component>
+
+				</div>
+
+				<div class="posts">
+					<single-post
+						v-for="(post, index) in posts"
+						:title="post.title"
+						:body="post.body"
+						:post_id="post.id"
+						:key="post.id"></single-post>
+				</div>
+			</div>
+		</section>
+
+
+
+	</main>
+	<footer>
+		<!-- Stopka copyright -->
+	</footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- vuejs -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- nasze pliki js -->
+	<!-- <script src="script.js"></script> -->
+	<script src="custom_vue.js"></script>
+
+  </body>
+</html>
